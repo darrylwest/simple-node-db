@@ -29,8 +29,9 @@ a database implementation on top of levelup, leveldown, and memdown...
 	
 	db = new SimpleDb( options );
 	
-## query
+## query( params, rowCallback, completeCallback )
 
+	// query for a list rows where the key begins with 'mydomain:'
 	var list = [];
 	
 	var rowCallback = function(data) {
@@ -40,15 +41,15 @@ a database implementation on top of levelup, leveldown, and memdown...
 		}
 	};
 	
-	var options = {
+	var params = {
 		offset:50,
 		limit:25
 	};
 	
-	db.query(rowCallback, completeCallback [, options ]);
+	db.query(params, rowCallback, completeCallback);
 	
 
-## find
+## find( id, callback )
 
 	// value is saved as a json object
 	var callback = function(err, result) {
@@ -58,23 +59,63 @@ a database implementation on top of levelup, leveldown, and memdown...
 	};
 	
 	db.find(id, callback);
-
-## update
-
-	// model must have an 'id' attribute
-	db.update( model, callback );
-
+	
 ## insert 
 
 	// id is created from uuid (without the dashes)
 	db.insert( model, callback );
 
-## delete
+
+## update( model, callback )
+
+	// probably best to prefix the id with a domain, in this case user; if the model has a 'lastUpdated'
+	// attribute, then it will be updated to the current server date; if the model has a 'version' number
+	// it will be bumped by one.
+	var user = {
+		id:'user:12345',
+		dateCreated:new Date(),
+		lastUpdated:new Date(),
+		version:0,
+		name:'Sam Sammyson',
+		email:'sam@sammyson.com'
+	};
+	
+	var callback = function(err, model) {
+		if (err) throw err;
+		
+		assert model.version === user.version + 1;
+		assert model.lastUpdated.getTime() > user.dateCreated.getTime();
+	};
+	
+	// model must have an 'id' attribute
+	db.update( model, callback );
+
+
+## delete( id, callback )
 
 	db.delete( id, callback );
 
-## replicate
+## replicate( replicatePath, callback )
 
-	// copy the current database to a replicate
+	// copy the current database to a replicate; use this to periodically backup an in-memory db or to
+	// simply get a snap-shot of the current database
 	db.replicate( replicateDbPath, callback );
+	
+## close( callback )
+
+	db.close(function(err) {
+		log.info('db is now closed...');
+	});
+
+## open( callback )
+
+	db.open(function(err) {
+		log.info('db is now open...');
+	});
+
+## isInMemory()
+	
+	if (db.isInMemory()) {
+		log.info('database is in-memory, data will be lost if not backed up...');
+	}
 	

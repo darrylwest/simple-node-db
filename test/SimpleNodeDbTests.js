@@ -21,9 +21,10 @@ describe('SimpleNodeDb', function() {
             'insert',
             'delete',
             'replicate',
-            'isMemoryOnly',
+            'isInMemory',
             'open',
-            'close'
+            'close',
+            '__protected'
         ];
 
         it('should create a memory-only instance of SimpleNodeDb', function() {
@@ -32,7 +33,7 @@ describe('SimpleNodeDb', function() {
 
             db.should.be.instanceof( SimpleNodeDb );
 
-            db.isMemoryOnly().should.equal( true );
+            db.isInMemory().should.equal( true );
         });
 
         it('should create a file-based instance of SimpleNodeDb', function(done) {
@@ -64,6 +65,16 @@ describe('SimpleNodeDb', function() {
                     levelup.destroy( dbfile );
                     done();
                 });
+            });
+        });
+
+        it('should have all know methods by size and type', function() {
+            var db = new SimpleNodeDb();
+
+            dash.methods( db ).length.should.equal( methods.length );
+
+            methods.forEach(function(method) {
+                db[ method ].should.be.a( 'function' );
             });
         });
     });
