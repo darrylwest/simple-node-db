@@ -7,12 +7,11 @@
 var should = require('chai').should(),
     dash = require('lodash'),
     SimpleNodeDb = require('../lib/SimpleNodeDb' ),
+    levelup = require('levelup' ),
     fs = require('fs');
 
 describe('SimpleNodeDb', function() {
     'use strict';
-
-    var dbfile = './simpledb-test';
 
     describe('#instance', function() {
         var methods = [
@@ -23,7 +22,8 @@ describe('SimpleNodeDb', function() {
             'delete',
             'replicate',
             'isMemoryOnly',
-            'dbPath'
+            'open',
+            'close'
         ];
 
         it('should create a memory-only instance of SimpleNodeDb', function() {
@@ -36,14 +36,34 @@ describe('SimpleNodeDb', function() {
         });
 
         it('should create a file-based instance of SimpleNodeDb', function(done) {
-            var db = new SimpleNodeDb( dbfile );
+            var dbfile = './simpledb-test-' + dash.random(1000, 9999),
+                db = new SimpleNodeDb( dbfile );
 
             should.exist( db );
 
             fs.exists( dbfile, function(exists) {
                 exists.should.equal( true );
 
-                done();
+                db.close(function() {
+                    levelup.destroy( dbfile );
+                    done();
+                });
+            });
+        });
+
+        it('should create a file-based instance of SimpleNodeDb', function(done) {
+            var dbfile = 'simpledb-test-' + dash.random(1000, 9999),
+                db = new SimpleNodeDb( dbfile );
+
+            should.exist( db );
+
+            fs.exists( dbfile, function(exists) {
+                exists.should.equal( true );
+
+                db.close(function() {
+                    levelup.destroy( dbfile );
+                    done();
+                });
             });
         });
     });
