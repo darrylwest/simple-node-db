@@ -1,1 +1,4 @@
+vendor.json
+tmp/
 node_modules
+keys.enc

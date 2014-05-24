@@ -1,18 +1,38 @@
 {
   "name": "simple-node-db",
-  "version": "0.2.1",
-  "description": "'simple node database implemented on levelup, leveldown and memdown'",
-  "main": "simpledb.js",
+  "version": "0.9.502",
+  "description": "A database-ish implementation on top of levelup, leveldown, and memdown",
+  "main": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/darrylwest/simple-node-db.git"
+    "url": "https://github.com/darrylwest/simple-node-db.git"
   },
   "dependencies": {
+    "casual": "^1.4.5",
+    "commander": "^2.2.0",
     "leveldown": "^0.10.2",
     "levelup": "^0.18.3",
+    "lodash": "~2.4.1",
     "memdown": "^0.10.0",
+    "node-uuid": "~1.4.1",
     "path": "^0.4.9",
-    "util": "^0.10.3"
+    "simple-node-logger": "^0.9.6"
+  },
+  "devDependencies": {
+    "mocha": "~1.16.2",
+    "chai": "~1.8.1",
+    "express-mocks-http": "0.0.11",
+    "grunt": "~0.4.2",
+    "grunt-concurrent": "~0.3.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-mocha-test": "~0.8.1",
+    "jshint-stylish": "~0.1.3",
+    "load-grunt-tasks": "~0.1.0",
+    "time-grunt": "~0.1.1"
   },
   "author": "darryl.west@raincitysoftware.com",
   "license": "Apache 2.0",
