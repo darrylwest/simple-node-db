@@ -39,7 +39,7 @@ module.exports = function(grunt) {
             },
             all: [
                 'Gruntfile.js',
-                '<%= dirs.app %>/*.js',
+                '<%= dirs.lib %>/*.js',
                 '<%= dirs.test %>/*.js',
                 '<%= dirs.test %>/*/*.js'
             ]
