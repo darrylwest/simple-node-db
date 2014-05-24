@@ -1,0 +1,20 @@
+{
+  "name": "simple-node-db",
+  "version": "0.2.1",
+  "description": "'simple node database implemented on levelup, leveldown and memdown'",
+  "main": "simpledb.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/darrylwest/simple-node-db.git"
+  },
+  "dependencies": {
+    "leveldown": "^0.10.2",
+    "levelup": "^0.18.3",
+    "memdown": "^0.10.0",
+    "path": "^0.4.9",
+    "util": "^0.10.3"
+  },
+  "author": "darryl.west@raincitysoftware.com",
+  "license": "Apache 2.0",
+  "homepage": "https://github.com/darrylwest/simple-node-db"
+}
