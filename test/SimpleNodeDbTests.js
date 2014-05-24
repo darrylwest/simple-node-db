@@ -22,10 +22,13 @@ describe('SimpleNodeDb', function() {
     };
 
     describe('#instance', function() {
-        var db = new SimpleNodeDb( createOptions() );
 
-        it('should create an instance of SimpleNodeDb', function() {
+
+        it('should create a memory-only instance of SimpleNodeDb', function() {
+            var db = new SimpleNodeDb();
             should.exist( db );
+
+            db.should.be.instanceof( SimpleNodeDb );
         });
     });
 });

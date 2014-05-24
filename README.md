@@ -10,11 +10,11 @@ a database implementation on top of levelup, leveldown, and memdown...
 	var SimpleDb = require('simple-node-db');
 	var db = new SimpleDb();
 	
-	// db is now in memory-mode
+	// db will write to memory only
 	
 	db = new SimpleDb('/path/to/databse');
 	
-	// db is now writing to the file system
+	// db will now write to the file system
 	
 	// create db with options
 	var options = {
