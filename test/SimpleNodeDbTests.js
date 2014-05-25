@@ -119,7 +119,21 @@ describe('SimpleNodeDb', function() {
             db.insert( key, user, callback );
         });
 
-        it('should reject a non-object model');
+        it('should reject a non-object model', function(done) {
+            var model = 'this is a bad model',
+                key = 'bad key',
+                db = new SimpleNodeDb(),
+                callback;
+
+            callback = function(err, result) {
+                should.exist( err );
+                should.not.exist( result );
+
+                done();
+            };
+
+            db.insert( key, model, callback );
+        });
     });
 
     describe('update', function() {
