@@ -1,7 +1,16 @@
 simple-node-db
 ==============
 
-a database implementation on top of levelup, leveldown, and memdown...
+## Overview
+
+A database implementation on top of levelup, leveldown, and memdown.  SimpleNodeDb leverages the document store aspects of levelup to provide a data-model centric implementation.   
+
+Models are stored as json strings with domain-scoped keys.  For example a user data model's key of '12345' woould have an associated domain key of 'user:12345'.  So querying for users as opposed to orders or inventory parts is as easy as including records where keys begin with 'user:'.
+
+Typically SimpleNodeDb is well suited for medium to small datasets or datastores that don't require complex querying.  It also provides robust caching when used as an in-memory data store.
+
+
+ 
 
 # API
 
@@ -119,3 +128,5 @@ a database implementation on top of levelup, leveldown, and memdown...
 		log.info('database is in-memory, data will be lost if not backed up...');
 	}
 	
+- - -
+<p><small><em>Version 0.9.12</em></small></p>
