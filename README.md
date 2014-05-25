@@ -97,10 +97,7 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 
 ## update( key, model, callback )
 
-	// probably best to prefix the id with a domain, in this case user; if the model has a 'lastUpdated'
-	// attribute, then it will be updated to the current server date; if the model has a 'version' number
-	// it will be bumped by one.
-	var user = {
+	// the version and lastUpdated attributes are automatically updated	var user = {
 		id:'12345',
 		dateCreated:new Date(),
 		lastUpdated:new Date(),
