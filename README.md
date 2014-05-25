@@ -123,6 +123,17 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 ## delete( key, callback )
 
 	db.delete( key, callback );
+	
+## createDomainKey( domain, id );
+
+	var model = {
+		id:uuid.v4()
+	};
+	
+	var key = db.createDomainKey( 'user', model.id );
+	
+	assert key.contains( 'user' );
+	assert key.contains( model.id );
 
 ## replicate( replicatePath, callback )
 

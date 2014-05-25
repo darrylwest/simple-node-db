@@ -8,7 +8,7 @@ var should = require('chai').should(),
     dash = require('lodash'),
     TestDbDataset = require('./fixtures/TestDbDataset' ),
     SimpleNodeDb = require('../lib/SimpleNodeDb' ),
-    levelup = require('levelup' ),
+    levelup = require( 'levelup' ),
     fs = require('fs');
 
 describe('SimpleNodeDb', function() {
@@ -104,10 +104,37 @@ describe('SimpleNodeDb', function() {
 
                 model.version.should.equal( 0 );
 
-                done();
+                var ldb = db.__protected().levelDb;
+                ldb.get( key, function(err, u) {
+                    should.not.exist( err );
+                    should.exist( u );
+
+                    var obj = JSON.parse( u );
+                    obj.id.should.equal( user.id );
+
+                    done();
+                });
             };
 
             db.insert( key, user, callback );
         });
+
+        it('should reject a non-object model');
+    });
+
+    describe('update', function() {
+        it('should update an existing model');
+    });
+
+    describe('delete', function() {
+        it('should remove a known model');
+    });
+
+    describe('query', function() {
+        it('should return a list of known models');
+    });
+
+    describe('replicate', function() {
+        it('should create a copy of the existing database');
     });
 });
