@@ -154,22 +154,24 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 	
 ## backup( filename, callback )
 
-	// simple dump of keys and values row-by-row, CR/LF delimited
+	// stream dump of keys and values row-by-row, CR/LF delimited
 	var filename = '/path/to/backup/file';
 	
-	var callback = function(err, stat) {
+	var callback = function(err, rowsWritten) {
 		if (err) throw err;
 		
-		assert stat.isFile()
-		assert stat.size > 0
+		assert rowsWritten > 0;
 	};
 	
 	db.backup( filename, callback );
 
 ## restore( filename, callback )
 
-	// read the key/value file and batch put the rows
-	var callback = function(err) {
+	// read the key/value file and batch put the rows; uses stream reader to 
+	var callback = function(err, rowsRead) {
+		if (err) throw err;
+		
+		assert rowsRead > 0;
 	};
 	
 	var filename = '/path/to/my/backup';

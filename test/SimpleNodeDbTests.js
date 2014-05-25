@@ -237,27 +237,43 @@ describe('SimpleNodeDb', function() {
     describe('backup', function() {
         var db = new SimpleNodeDb(),
             users = dataset.createUserList(),
-            batch = dataset.createPutBatch( 'user', users );
+            batch = dataset.createPutBatch( 'user', users ),
+            filename = '/tmp/db-backup.dat';
 
         beforeEach(function(done) {
             populateDatabase( db, batch, done );
         });
 
         it('should backup a database to a file', function(done) {
-            var callback = function(err) {
+            var callback = function(err, count) {
                 should.not.exist( err );
+                should.exist( count );
+
+                count.should.equal( users.length );
 
                 done();
             };
 
-            db.backup( backupFilename, callback );
+            db.backup( filename, callback );
         });
     });
 
     describe('restore', function() {
         var db = new SimpleNodeDb();
 
-        it('should restore a database from a file');
+        it('should restore a database from a file', function(done) {
+            var callback = function(err, count) {
+                should.not.exist( err );
+
+                should.exist( count );
+
+                count.should.equal( 25 );
+
+                done();
+            };
+
+            db.restore( backupFilename, callback );
+        });
     });
 
     describe('replicate', function() {
