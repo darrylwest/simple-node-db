@@ -3,14 +3,17 @@ simple-node-db
 
 ## Overview
 
-A database implementation on top of levelup, leveldown, and memdown.  SimpleNodeDb leverages the document store aspects of levelup to provide a data-model centric implementation.   
+A database implementation on top of levelup, leveldown, and memdown.  SimpleNodeDb leverages the document store aspects of level up to provide a data-model centric implementation.   
 
-Models are stored as json strings with domain-scoped keys.  For example a user data model's key of '12345' would have an associated domain key of 'user:12345'.  So querying for users as opposed to orders or inventory parts is as easy as including records where keys begin with 'user:'.
+Models are stored as JSON strings with domain-scoped keys.  For example a user data model's key of '12345' would have an associated domain key of 'user:12345'.  So querying for users as opposed to orders or inventory parts is as easy as including records where keys begin with 'user:'.
 
-Automatic model attributes include dateCreated, lastUpdated and version.  Version is used to inforce optomistic locking.
+Automatic model attributes include dateCreated, lastUpdated and version.  The version attribute is used to enforce optimistic locking.
 
-Typically SimpleNodeDb is well suited for small to medium datasets (less than 100K rows) or datastores that don't require complex querying.  It also provides robust caching when used as an in-memory data store.  To support more than 100K rows you should probably create alternate indexing schemes or stick with redis, mongo, or a traditional SQL database.
+Typically SimpleNodeDb is well suited for small to medium datasets (less than 100K rows) or data stores that don't require complex querying.  It also provides robust caching when used as an in-memory data store.  To support more than 100K rows you should probably create alternate indexing schemes or stick with redis, mongo, or a traditional SQL database.
 
+## Testing And Examples
+
+Basic testing is in place for all implemented methods (replicate is not implemented yet).  More robust testing and examples will come soon.
 
 # API
 
@@ -21,7 +24,7 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 	var db = new SimpleDb();
 	
 	// create a file based database
-	db = new SimpleDb('/path/to/databse');
+	db = new SimpleDb('/path/to/database');
 	
 	// create a database with options
 	var options = {
@@ -29,7 +32,7 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 		replication:{
 			path:'/my/replication/db',
 			interval:60000 * 5, // save after 5 minutes of inactivity,
-			extention:'today' // replication name rolls daily
+			extension:'today' // replication name rolls daily
 		},
 		log:new Logger('db')
 	};
@@ -38,7 +41,7 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 	
 ## query( params, rowCallback, completeCallback )
 
-	// query for a list rows where the key begins with 'mydomain:'; limit the list to 25 rows
+	// query for a list rows where the key begins with 'my domain:'; limit the list to 25 rows
 	
 	var rowCallback = function(key, value) {
 		// put appropriate query conditions here 
@@ -65,7 +68,7 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 ## find( key, callback )
 
 	// create the key based on domain and model id
-	var key = db.cxreateDomainKey( 'user', id );
+	var key = db.createDomainKey( 'user', id );
 	
 	// value is saved as a json object
 	var callback = function(err, model) {
