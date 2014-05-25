@@ -38,18 +38,24 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 	
 ## query( params, rowCallback, completeCallback )
 
-	// query for a list rows where the key begins with 'mydomain:'
-	var list = [];
+	// query for a list rows where the key begins with 'mydomain:'; limit the list to 25 rows
 	
-	var rowCallback = function(data) {
+	var rowCallback = function(key, value) {
 		// put appropriate query conditions here 
-		if ( data.key.indexOf('mydomain:') >= 0) ) {
-			list.push( data.value );
+		if ( key.indexOf('mydomain:') >= 0) ) {
+			// parse and return the value
+			return JSON.parse( value );
 		}
 	};
 	
+	var completeCallback = function(err, list) {
+		if (err) throw err;
+		
+		assert list.length === 25
+	};
+	
 	var params = {
-		offset:50,
+		offset:0,
 		limit:25
 	};
 	
@@ -122,12 +128,17 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 
 ## delete( key, callback )
 
+	// very simple, merciless delete -- use at your own risk...
+	var callback = function(err) {
+		if (err) throw err;
+	};
+	
 	db.delete( key, callback );
 	
 ## createDomainKey( domain, id );
 
 	var model = {
-		id:uuid.v4()
+		id:uuid.v4().replace(/-/g, '')
 	};
 	
 	var key = db.createDomainKey( 'user', model.id );
@@ -140,6 +151,22 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 	// copy the current database to a replicate; use this to periodically backup an in-memory db or to
 	// simply get a snap-shot of the current database
 	db.replicate( replicateDbPath, callback );
+	
+## backup( filename, callback )
+
+	// simple dump of keys and values row-by-row, CR/LF delimited
+	var filename = '/path/to/backup/file';
+	
+	var callback = function(err, stat) {
+		if (err) throw err;
+		
+		assert stat.isFile()
+		assert stat.size > 0
+	};
+	
+	db.backup( filename, callback );
+
+## restore( filename, callback )
 	
 ## close( callback )
 

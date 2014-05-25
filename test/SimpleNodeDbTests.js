@@ -166,8 +166,19 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('query', function() {
-        var db = new SimpleNodeDb('./query-db'),
-            users = dataset.createUserList();
+        var db = new SimpleNodeDb(),
+            size = 35,
+            users = dataset.createUserList( size ),
+            batch = dataset.createPutBatch( 'user', users );
+
+        beforeEach(function(done) {
+            var ldb = db.__protected().levelDb;
+            ldb.batch( batch, function(err) {
+                if (err) throw err;
+
+                done();
+            });
+        });
 
         it('should return a list of known models', function(done) {
             var rowCallback,
@@ -182,7 +193,7 @@ describe('SimpleNodeDb', function() {
                 should.not.exist( err );
                 should.exist( list );
 
-                list.length.should.be.above( 0 );
+                list.length.should.be.equal( size );
                 var user = list[0];
 
                 should.exist( user.id );
@@ -191,6 +202,36 @@ describe('SimpleNodeDb', function() {
             };
 
             db.query( params, rowCallback, completeCallback );
+        });
+    });
+
+    describe('delete', function() {
+        var db = new SimpleNodeDb(),
+            size = 8,
+            users = dataset.createUserList( size ),
+            batch = dataset.createPutBatch( 'user', users );
+
+        beforeEach(function(done) {
+            var ldb = db.__protected().levelDb;
+            ldb.batch( batch, function(err) {
+                if (err) throw err;
+
+                done();
+            });
+        });
+
+        it('should remove a known row from the database', function(done) {
+            var user = users[ 4 ],
+                key = db.createDomainKey( 'user', user.id ),
+                callback;
+
+            callback = function(err) {
+                should.not.exist( err );
+                done();
+            };
+
+            db.delete( key, callback );
+
         });
     });
 

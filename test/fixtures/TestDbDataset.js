@@ -52,6 +52,19 @@ var TestDbDataset = function() {
         return list;
     };
 
+    this.createPutBatch = function(domain, list) {
+        var batch = [];
+
+        list.forEach(function(item) {
+            var key = domain + ':' + item.id;
+            var value = JSON.stringify( item );
+
+            batch.push( { type:'put', key:key, value:value });
+        });
+
+        return batch;
+    };
+
     this.createUserModel = function() {
         var params = {};
 
