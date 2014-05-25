@@ -234,9 +234,24 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('backup', function() {
-        var db = new SimpleNodeDb();
+        var db = new SimpleNodeDb(),
+            users = dataset.createUserList(),
+            batch = dataset.createPutBatch( 'user', users ),
+            filename = './backups/db-backup.dat';
 
-        it('should backup a database to a file');
+        beforeEach(function(done) {
+            populateDatabase( db, batch, done );
+        });
+
+        it('should backup a database to a file', function(done) {
+            var callback = function(err) {
+                should.not.exist( err );
+
+                done();
+            };
+
+            db.backup( filename, callback );
+        });
     });
 
     describe('restore', function() {

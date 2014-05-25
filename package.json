@@ -1,6 +1,6 @@
 {
   "name": "simple-node-db",
-  "version": "0.9.12",
+  "version": "0.9.13",
   "description": "A database-ish implementation on top of levelup, leveldown, and memdown",
   "main": "./index.js",
   "repository": {

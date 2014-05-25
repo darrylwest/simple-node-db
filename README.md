@@ -167,6 +167,14 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 	db.backup( filename, callback );
 
 ## restore( filename, callback )
+
+	// read the key/value file and batch put the rows
+	var callback = function(err) {
+	};
+	
+	var filename = '/path/to/my/backup';
+	
+	db.restore( filename, callback );
 	
 ## close( callback )
 
@@ -187,4 +195,4 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 	}
 	
 - - -
-<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.12</em></small></p>
+<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.13</em></small></p>
