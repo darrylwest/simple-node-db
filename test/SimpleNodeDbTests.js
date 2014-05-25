@@ -14,7 +14,17 @@ var should = require('chai').should(),
 describe('SimpleNodeDb', function() {
     'use strict';
 
-    var dataset = new TestDbDataset();
+    var dataset = new TestDbDataset(),
+        populateDatabase;
+
+    populateDatabase = function(db, batch, done) {
+        var ldb = db.__protected().levelDb;
+        ldb.batch( batch, function(err) {
+            if (err) throw err;
+
+            done();
+        });
+    };
 
     describe('#instance', function() {
         var methods = [
@@ -23,6 +33,8 @@ describe('SimpleNodeDb', function() {
             'update',
             'insert',
             'delete',
+            'backup',
+            'restore',
             'replicate',
             'isInMemory',
             'open',
@@ -161,10 +173,6 @@ describe('SimpleNodeDb', function() {
         });
     });
 
-    describe('delete', function() {
-        it('should remove a known model');
-    });
-
     describe('query', function() {
         var db = new SimpleNodeDb(),
             size = 35,
@@ -172,12 +180,7 @@ describe('SimpleNodeDb', function() {
             batch = dataset.createPutBatch( 'user', users );
 
         beforeEach(function(done) {
-            var ldb = db.__protected().levelDb;
-            ldb.batch( batch, function(err) {
-                if (err) throw err;
-
-                done();
-            });
+            populateDatabase( db, batch, done );
         });
 
         it('should return a list of known models', function(done) {
@@ -212,12 +215,7 @@ describe('SimpleNodeDb', function() {
             batch = dataset.createPutBatch( 'user', users );
 
         beforeEach(function(done) {
-            var ldb = db.__protected().levelDb;
-            ldb.batch( batch, function(err) {
-                if (err) throw err;
-
-                done();
-            });
+            populateDatabase( db, batch, done );
         });
 
         it('should remove a known row from the database', function(done) {
@@ -235,7 +233,21 @@ describe('SimpleNodeDb', function() {
         });
     });
 
+    describe('backup', function() {
+        var db = new SimpleNodeDb();
+
+        it('should backup a database to a file');
+    });
+
+    describe('restore', function() {
+        var db = new SimpleNodeDb();
+
+        it('should restore a database from a file');
+    });
+
     describe('replicate', function() {
+        var db = new SimpleNodeDb();
+
         it('should create a copy of the existing database');
     });
 });
