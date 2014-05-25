@@ -274,11 +274,14 @@ describe('SimpleNodeDb', function() {
 
             db.restore( backupFilename, callback );
         });
+
+        it('should not restore a file that has a parse error');
     });
 
     describe('replicate', function() {
         var db = new SimpleNodeDb();
 
-        it('should create a copy of the existing database');
+        it('should copy all data from an existing database to a replica');
+        it('should sync new data operations to a replica database');
     });
 });
