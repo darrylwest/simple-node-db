@@ -15,6 +15,7 @@ describe('SimpleNodeDb', function() {
     'use strict';
 
     var dataset = new TestDbDataset(),
+        backupFilename = './backups/db-backup.dat',
         populateDatabase;
 
     populateDatabase = function(db, batch, done) {
@@ -236,8 +237,7 @@ describe('SimpleNodeDb', function() {
     describe('backup', function() {
         var db = new SimpleNodeDb(),
             users = dataset.createUserList(),
-            batch = dataset.createPutBatch( 'user', users ),
-            filename = './backups/db-backup.dat';
+            batch = dataset.createPutBatch( 'user', users );
 
         beforeEach(function(done) {
             populateDatabase( db, batch, done );
@@ -250,7 +250,7 @@ describe('SimpleNodeDb', function() {
                 done();
             };
 
-            db.backup( filename, callback );
+            db.backup( backupFilename, callback );
         });
     });
 
