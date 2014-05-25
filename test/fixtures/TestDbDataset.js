@@ -41,7 +41,9 @@ var TestDbDataset = function() {
     };
 
     this.createUserModel = function() {
-        var params = dataset.createBaseModel('user');
+        var params = {};
+
+        params.id = uuid.v4().replace(/-/g, '');
 
         params.name = casual.name;
         params.email = casual.email;

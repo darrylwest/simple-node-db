@@ -5,27 +5,25 @@ simple-node-db
 
 A database implementation on top of levelup, leveldown, and memdown.  SimpleNodeDb leverages the document store aspects of levelup to provide a data-model centric implementation.   
 
-Models are stored as json strings with domain-scoped keys.  For example a user data model's key of '12345' woould have an associated domain key of 'user:12345'.  So querying for users as opposed to orders or inventory parts is as easy as including records where keys begin with 'user:'.
+Models are stored as json strings with domain-scoped keys.  For example a user data model's key of '12345' would have an associated domain key of 'user:12345'.  So querying for users as opposed to orders or inventory parts is as easy as including records where keys begin with 'user:'.
 
-Typically SimpleNodeDb is well suited for medium to small datasets or datastores that don't require complex querying.  It also provides robust caching when used as an in-memory data store.
+Automatic model attributes include dateCreated, lastUpdated and version.  Version is used to inforce optomistic locking.
 
+Typically SimpleNodeDb is well suited for small to medium datasets (less than 100K rows) or datastores that don't require complex querying.  It also provides robust caching when used as an in-memory data store.  To support more than 100K rows you should probably create alternate indexing schemes or stick with redis, mongo, or a traditional SQL database.
 
- 
 
 # API
 
 ## constructor
 
+	// create an in-memory database
 	var SimpleDb = require('simple-node-db');
 	var db = new SimpleDb();
 	
-	// db will write to memory only
-	
+	// create a file based database
 	db = new SimpleDb('/path/to/databse');
 	
-	// db will now write to the file system
-	
-	// create db with options
+	// create a database with options
 	var options = {
 		path:'/my/db/path',
 		replication:{
@@ -58,36 +56,61 @@ Typically SimpleNodeDb is well suited for medium to small datasets or datastores
 	db.query(params, rowCallback, completeCallback);
 	
 
-## find( id, callback )
+## find( key, callback )
 
+	// create the key based on domain and model id
+	var key = db.cxreateDomainKey( 'user', id );
+	
 	// value is saved as a json object
-	var callback = function(err, result) {
+	var callback = function(err, model) {
 		if (err) throw err;
 		
-		var model = JSON.parse( result );
+		// do something with the model...
 	};
 	
-	db.find(id, callback);
+	db.find( key, callback );
 	
-## insert 
+## insert( key, model, callback )
 
-	// id is created from uuid (without the dashes)
-	db.insert( model, callback );
+	// a simple user model
+	var user = {
+		id:'12345',
+		name:'Sam Sammyson',
+		email:'sam@sammyson.com',
+		status:'active'
+	};
+	
+	// key is created for the 'user' domain
+	var key = db.createDomainKey( 'user', user.id )
+	
+	var callback = function(err, model) {
+		if (err) throw err;
+		
+		assert model.dateCreated;
+		assert model.lastUpdated === model.dateCreated;
+		assert model.version === 0;
+	};
+	
+	// model must have an 'id' attribute
+	db.insert( key, model, callback );
 
 
-## update( model, callback )
+## update( key, model, callback )
 
 	// probably best to prefix the id with a domain, in this case user; if the model has a 'lastUpdated'
 	// attribute, then it will be updated to the current server date; if the model has a 'version' number
 	// it will be bumped by one.
 	var user = {
-		id:'user:12345',
+		id:'12345',
 		dateCreated:new Date(),
 		lastUpdated:new Date(),
 		version:0,
 		name:'Sam Sammyson',
-		email:'sam@sammyson.com'
+		email:'sam@sammyson.com',
+		status:'active'
 	};
+	
+	var key = db.createDomainKey( 'user', user.id )
 	
 	var callback = function(err, model) {
 		if (err) throw err;
@@ -97,12 +120,12 @@ Typically SimpleNodeDb is well suited for medium to small datasets or datastores
 	};
 	
 	// model must have an 'id' attribute
-	db.update( model, callback );
+	db.update( key, model, callback );
 
 
-## delete( id, callback )
+## delete( key, callback )
 
-	db.delete( id, callback );
+	db.delete( key, callback );
 
 ## replicate( replicatePath, callback )
 
@@ -129,4 +152,4 @@ Typically SimpleNodeDb is well suited for medium to small datasets or datastores
 	}
 	
 - - -
-<p><small><em>Version 0.9.12</em></small></p>
+<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.12</em></small></p>

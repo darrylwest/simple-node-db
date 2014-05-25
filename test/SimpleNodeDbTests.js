@@ -84,7 +84,7 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('insert', function() {
-        it('should insert a new model', function(done) {
+        it('should insert a new model and set dateCreated, lastUpdated and version', function(done) {
             var user = dataset.createUserModel(),
                 db = new SimpleNodeDb(),
                 key = db.createDomainKey( 'user', user.id ),
@@ -97,6 +97,12 @@ describe('SimpleNodeDb', function() {
                 should.exist( model );
 
                 // TODO find the user from id
+                model.id.should.equal( user.id );
+
+                should.exist( model.dateCreated );
+                should.exist( model.lastUpdated );
+
+                model.version.should.equal( 0 );
 
                 done();
             };
