@@ -136,8 +136,29 @@ describe('SimpleNodeDb', function() {
         });
     });
 
-    describe('update', function() {
-        it('should update an existing model');
+    describe('update', function(done) {
+        var user = dataset.createUserModel(),
+            db = new SimpleNodeDb(),
+            key = db.createDomainKey( 'user', user.id );
+
+        db.insert( key, user, function(err, model) {
+            user = model;
+        });
+
+        it('should update an existing model', function(done) {
+            var version = user.version;
+
+            var callback = function(err, model) {
+                should.not.exist( err );
+                should.exist( model );
+
+                model.version.should.equal( version + 1 );
+
+                done();
+            };
+
+            db.update( key, user, callback );
+        });
     });
 
     describe('delete', function() {
