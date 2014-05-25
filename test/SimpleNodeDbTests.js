@@ -6,12 +6,15 @@
  */
 var should = require('chai').should(),
     dash = require('lodash'),
+    TestDbDataset = require('./fixtures/TestDbDataset' ),
     SimpleNodeDb = require('../lib/SimpleNodeDb' ),
     levelup = require('levelup' ),
     fs = require('fs');
 
 describe('SimpleNodeDb', function() {
     'use strict';
+
+    var dataset = new TestDbDataset();
 
     describe('#instance', function() {
         var methods = [
@@ -24,6 +27,7 @@ describe('SimpleNodeDb', function() {
             'isInMemory',
             'open',
             'close',
+            'createDomainKey',
             '__protected'
         ];
 
@@ -76,6 +80,28 @@ describe('SimpleNodeDb', function() {
             methods.forEach(function(method) {
                 db[ method ].should.be.a( 'function' );
             });
+        });
+    });
+
+    describe('insert', function() {
+        it('should insert a new model', function(done) {
+            var user = dataset.createUserModel(),
+                db = new SimpleNodeDb(),
+                key = db.createDomainKey( 'user', user.id ),
+                callback;
+
+            callback = function(err, model) {
+                if (err) throw err;
+
+                should.not.exist( err );
+                should.exist( model );
+
+                // TODO find the user from id
+
+                done();
+            };
+
+            db.insert( key, user, callback );
         });
     });
 });
