@@ -149,11 +149,12 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	assert key.contains( 'user' );
 	assert key.contains( model.id );
 
-## replicate( replicatePath, callback )
+## replicate( config, callback )
 
-	// copy the current database to a replicate; use this to periodically backup an in-memory db or to
-	// simply get a snap-shot of the current database
-	db.replicate( replicateDbPath, callback );
+	// copy the current database to a replica; use this to periodically backup an in-memory db or to
+	// get a snap-shot of the current database; configure to automatically replicate changes periodically.
+	
+	db.replicate( config, callback );
 	
 ## backup( filename, callback )
 
@@ -200,4 +201,4 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	}
 	
 - - -
-<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.13</em></small></p>
+<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.14</em></small></p>
