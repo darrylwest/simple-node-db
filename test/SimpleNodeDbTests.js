@@ -136,7 +136,7 @@ describe('SimpleNodeDb', function() {
         });
     });
 
-    describe('update', function(done) {
+    describe('update', function() {
         var user = dataset.createUserModel(),
             db = new SimpleNodeDb(),
             key = db.createDomainKey( 'user', user.id );
@@ -166,7 +166,32 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('query', function() {
-        it('should return a list of known models');
+        var db = new SimpleNodeDb('./query-db'),
+            users = dataset.createUserList();
+
+        it('should return a list of known models', function(done) {
+            var rowCallback,
+                completeCallback,
+                params = {};
+
+            rowCallback = function(key, value) {
+                return JSON.parse( value );
+            };
+
+            completeCallback = function(err, list) {
+                should.not.exist( err );
+                should.exist( list );
+
+                list.length.should.be.above( 0 );
+                var user = list[0];
+
+                should.exist( user.id );
+
+                done();
+            };
+
+            db.query( params, rowCallback, completeCallback );
+        });
     });
 
     describe('replicate', function() {

@@ -8,4 +8,4 @@ dist
 *.swp
 node_modules
 jsdoc
-simpledb-test
+query-db

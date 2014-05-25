@@ -40,6 +40,18 @@ var TestDbDataset = function() {
         return obj;
     };
 
+    this.createUserList = function(count) {
+        if (!count) count = 25;
+
+        var list = [];
+
+        while ( count-- > 0 ) {
+            list.push( dataset.createUserModel() );
+        }
+
+        return list;
+    };
+
     this.createUserModel = function() {
         var params = {};
 
