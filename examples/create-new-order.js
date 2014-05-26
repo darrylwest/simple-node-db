@@ -2,11 +2,12 @@
 
 'use strict';
 
-var log = require('simple-node-logger').createLogger(),
+var path = require('path'),
+    log = require('simple-node-logger').createLogger(),
     casual = require('casual'),
-    SimpleDb = require('../lib/SimpleNodeDb'),
+    SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' )),
     options = {
-        path:'./orderdb',
+        path: path.join( __dirname, 'orderdb' ),
         log:log
     },
     db = new SimpleDb( options ),
@@ -91,22 +92,13 @@ var createNewOrder = function() {
 };
 
 
-var count = 500;
 
-function createOrder() {
-    // create the new order and key
-    order = createNewOrder();
-    key = db.createDomainKey( 'order', order.id );
+// create the new order and key
+order = createNewOrder();
+key = db.createDomainKey( 'order', order.id );
 
-    // do the insert 
-    db.insert( key, order, function(err, model) {
-        log.info('new order posted, key: ', key);
-        // log.info('model: ', JSON.stringify( model ));
-
-        if (count-- > 0) {
-            createOrder()
-        }
-    });
-}
-
-createOrder();
+// do the insert 
+db.insert( key, order, function(err, model) {
+    log.info('new order posted, key: ', key);
+    log.info('model: ', JSON.stringify( model ));
+});

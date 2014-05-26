@@ -2,10 +2,11 @@
 
 'use strict';
 
-var log = require('simple-node-logger').createLogger(),
-    SimpleDb = require('../lib/SimpleNodeDb'),
-    orderBackupFile = './orders.dat',
-    db = new SimpleDb( './orderdb' );
+var path = require('path'),
+    log = require('simple-node-logger').createLogger(),
+    SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' )),
+    orderBackupFile = path.join( __dirname, 'orders.dat' ),
+    db = new SimpleDb( path.join( __dirname, 'orderdb' ));
 
 db.backup( orderBackupFile, function(err, count) {
     if (err) throw err;
