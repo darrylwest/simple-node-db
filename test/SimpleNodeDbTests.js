@@ -36,6 +36,7 @@ describe('SimpleNodeDb', function() {
             'delete',
             'backup',
             'restore',
+            'stats',
             'replicate',
             'isInMemory',
             'open',
@@ -265,7 +266,6 @@ describe('SimpleNodeDb', function() {
         it('should restore a database from a file', function(done) {
             var callback = function(err, count) {
                 should.not.exist( err );
-
                 should.exist( count );
 
                 count.should.equal( 25 );
@@ -277,6 +277,39 @@ describe('SimpleNodeDb', function() {
         });
 
         it('should not restore a file that has a parse error');
+    });
+
+    describe('stats', function() {
+        var db = new SimpleNodeDb(),
+            users = dataset.createUserList( 23 ),
+            employees = dataset.createUserList( 34 ),
+            batch = [];
+
+        dataset.createPutBatch( 'user', users, batch );
+        dataset.createPutBatch( 'employee', employees, batch );
+
+        beforeEach(function(done) {
+            populateDatabase( db, batch, done );
+        });
+
+        it('should report database stats', function(done) {
+            var callback = function(err, stats) {
+                should.not.exist( err );
+                should.exist( stats );
+
+                console.log( stats );
+
+                stats.rowcount.should.equal( users.length + employees.length );
+
+                dash.size( stats.domains ).should.equal( 2 );
+                stats.domains.user.should.equal( users.length );
+                stats.domains.employee.should.equal( employees.length );
+
+                done();
+            };
+
+            db.stats( callback );
+        });
     });
 
     describe('replicate', function() {

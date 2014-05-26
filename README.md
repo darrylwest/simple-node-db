@@ -181,6 +181,18 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	
 	db.restore( filename, callback );
 	
+## stats( callback )
+
+	var callback = function(err, stats) {
+		if (err) throw err;
+		
+		console.log( stats.rowcount );
+		console.log( stats.domains );
+		console.log( stats.errors );
+	};
+	
+	db.stats( callback );
+	
 ## close( callback )
 
 	db.close(function(err) {
