@@ -1,0 +1,5 @@
+
+[ ] fix restore method to read huge files; refactor to read and process line-by-line
+[ ] add stats to count number of domains, total records, and verify that all values parse correctly
+[ ] add jsdocs
+

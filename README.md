@@ -138,17 +138,21 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	
 	db.delete( key, callback );
 	
+## createModelId()
+
+	// create a model id from uuid without dashes
+	var id = db.createModelId()
+	
 ## createDomainKey( domain, id );
 
 	var model = {
-		id:uuid.v4().replace(/-/g, '')
+		id:db.createModelId()
 	};
 	
 	var key = db.createDomainKey( 'user', model.id );
 	
 	assert key.contains( 'user' );
 	assert key.contains( model.id );
-
 
 	
 ## backup( filename, callback )
