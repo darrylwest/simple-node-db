@@ -17,6 +17,9 @@ jshint:
 watch:
 	@( grunt watchall )
 
+docs:
+	@( grunt jsdoc )
+
 publish:
 	@( npm publish ./ )
 
