@@ -40,6 +40,7 @@ describe('SimpleNodeDb', function() {
             'isInMemory',
             'open',
             'close',
+            'createModelId',
             'createDomainKey',
             '__protected'
         ];

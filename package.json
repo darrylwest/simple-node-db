@@ -1,7 +1,7 @@
 {
   "name": "simple-node-db",
-  "version": "0.9.14",
-  "description": "A database-ish implementation on top of levelup, leveldown, and memdown",
+  "version": "0.9.15",
+  "description": "A document database with query, insert, update, backup/restore and replication implemented on top of levelup, leveldown, and memdown.",
   "main": "./index.js",
   "repository": {
     "type": "git",
@@ -9,6 +9,7 @@
   },
   "keywords":[
     "database",
+    "document-db",
     "nonsql",
     "level",
     "leveldb",
