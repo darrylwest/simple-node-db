@@ -11,5 +11,8 @@ db.restore( path.join( __dirname, 'users.dat'), function(err, count) {
     if (err) throw err;
 
     console.log('user count: ', count);
+    db.stats(function(err, stats) {
+        console.log('stats: ', JSON.stringify( stats ));
+    });
 });
 
