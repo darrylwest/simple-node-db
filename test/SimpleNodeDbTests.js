@@ -98,6 +98,37 @@ describe('SimpleNodeDb', function() {
         });
     });
 
+    describe('find', function() {
+        var db = new SimpleNodeDb(),
+            users = dataset.createUserList( 23 ),
+            employees = dataset.createUserList( 34 ),
+            batch = [];
+
+        dataset.createPutBatch( 'user', users, batch );
+        dataset.createPutBatch( 'employee', employees, batch );
+
+        beforeEach(function(done) {
+            populateDatabase( db, batch, done );
+        });
+
+        it('should return a known model', function(done) {
+            var callback,
+                user = users[ 4 ],
+                key = db.createDomainKey( 'user', user.id );
+
+            callback = function(err, model) {
+                should.not.exist( err );
+                should.exist( model );
+
+                model.id.should.equal( user.id );
+
+                done();
+            };
+
+            db.find( key, callback );
+        });
+    });
+
     describe('insert', function() {
         it('should insert a new model and set dateCreated, lastUpdated and version', function(done) {
             var user = dataset.createUserModel(),
