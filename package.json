@@ -24,7 +24,6 @@
     "lodash": "~2.4.1",
     "memdown": "^0.10.0",
     "node-uuid": "~1.4.1",
-    "path": "^0.4.9",
     "simple-node-logger": "^0.9.6"
   },
   "devDependencies": {
