@@ -29,6 +29,7 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	// create a database with options
 	var options = {
 		path:'/my/db/path',
+		readAfterChange:true, // read-back record after insert/update; else return model
 		replication:{
 			path:'/my/replication/db',
 			interval:60000 * 5, // save after 5 minutes of inactivity,
@@ -106,7 +107,8 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 
 ## update( key, model, callback )
 
-	// the version and lastUpdated attributes are automatically updated	var user = {
+	// the version and lastUpdated attributes are automatically updated
+	var user = {
 		id:'12345',
 		dateCreated:new Date(),
 		lastUpdated:new Date(),
@@ -203,14 +205,15 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 
 	db.open(function(err) {
 		log.info('db is now open...');
-		
-		
 	});
 
 ## replicate( config, callback )
 
-	// copy the current database to a replica; use this to periodically backup an in-memory db or to
-	// get a snap-shot of the current database; configure to automatically replicate changes periodically.
+	// copy the current database to a replica; use this to periodically backup an in-memory 
+	// db or to get a snap-shot of the current database; configure to automatically replicate
+	// changes periodically.
+	
+	// NOTE: not implemented yet...
 	
 	db.replicate( config, callback );
 	
@@ -221,4 +224,4 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	}
 	
 - - -
-<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.19</em></small></p>
+<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.20</em></small></p>
