@@ -69,6 +69,9 @@ var TestDbDataset = function() {
         var params = {};
 
         params.id = uuid.v4().replace(/-/g, '');
+        params.dateCreated = new Date( '2014-01-01T02:03:04' );
+        params.lastUpdated = new Date( '2014-01-02T03:04:05' );
+        params.version = 0;
 
         params.name = casual.name;
         params.email = casual.email;

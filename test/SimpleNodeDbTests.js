@@ -43,6 +43,7 @@ describe('SimpleNodeDb', function() {
             'close',
             'createModelId',
             'createDomainKey',
+            'parseModel',
             '__protected'
         ];
 
@@ -340,6 +341,29 @@ describe('SimpleNodeDb', function() {
             };
 
             db.stats( callback );
+        });
+    });
+
+    describe('parseModel', function() {
+        var db = new SimpleNodeDb(),
+            user = dataset.createUserModel();
+
+        // console.log( user );
+
+        it('should parse a json model and set dates to date type', function() {
+            var json = JSON.stringify( user ),
+                model;
+
+            model = db.parseModel( json );
+
+            should.exist( model );
+            model.id.should.equal( user.id );
+
+            model.dateCreated.should.be.instanceof( Date );
+            model.lastUpdated.should.be.instanceof( Date );
+
+            model.dateCreated.getTime().should.equal( user.dateCreated.getTime() );
+            model.lastUpdated.getTime().should.equal( user.lastUpdated.getTime() );
         });
     });
 
