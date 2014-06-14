@@ -224,4 +224,4 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	}
 	
 - - -
-<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.21</em></small></p>
+<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.22</em></small></p>
