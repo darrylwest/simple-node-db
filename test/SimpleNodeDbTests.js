@@ -54,6 +54,7 @@ describe('SimpleNodeDb', function() {
             db.should.be.instanceof( SimpleNodeDb );
 
             db.isInMemory().should.equal( true );
+            db.__protected().readAfterChange.should.equal( true );
         });
 
         it('should create a file-based instance of SimpleNodeDb', function(done) {
