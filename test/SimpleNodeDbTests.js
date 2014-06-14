@@ -30,6 +30,7 @@ describe('SimpleNodeDb', function() {
     describe('#instance', function() {
         var methods = [
             'query',
+            'queryKeys',
             'find',
             'update',
             'insert',
@@ -241,6 +242,36 @@ describe('SimpleNodeDb', function() {
             };
 
             db.query( params, rowCallback, completeCallback );
+        });
+    });
+
+    describe('queryKeys', function() {
+        var db = new SimpleNodeDb(),
+            size = 30,
+            users = dataset.createUserList( size ),
+            batch = dataset.createPutBatch( 'user', users );
+
+        beforeEach(function(done) {
+            populateDatabase( db, batch, done );
+        });
+
+        it('should return a list of known keys', function(done) {
+            var completeCallback,
+                params = {};
+
+            completeCallback = function(err, keys) {
+                should.not.exist( err );
+                should.exist( keys );
+
+                // console.log( keys );
+
+                keys.length.should.be.equal( size );
+                keys[0].indexOf('user:' ).should.equal( 0 );
+
+                done();
+            };
+
+            db.queryKeys( params, completeCallback );
         });
     });
 
