@@ -3,13 +3,15 @@ simple-node-db
 
 ## Overview
 
-A database implementation on top of levelup, leveldown, and memdown.  SimpleNodeDb leverages the document store aspects of level up to provide a data-model centric implementation.   
+A database implementation on top of levelup, leveldown, and memdown.  SimpleNodeDb leverages the document store aspects of level up to provide a data-model/domain centric implementation.   
 
 Models are stored as JSON strings with domain-scoped keys.  For example a user data model's key of '12345' would have an associated domain key of 'user:12345'.  So querying for users as opposed to orders or inventory parts is as easy as including records where keys begin with 'user:'.
 
 Automatic model attributes include dateCreated, lastUpdated and version.  The version attribute is used to enforce optimistic locking.
 
 Typically SimpleNodeDb is well suited for small to medium datasets (less than 100K rows) or data stores that don't require complex querying.  It also provides robust caching when used as an in-memory data store.  To support more than 100K rows you should probably create alternate indexing schemes or stick with redis, mongo, or a traditional SQL database.
+
+__*Note: levelup is a simple key/value store.  It may be more appropriate to use this for simple storage.  SimpleNodeDb is designed to work more as a formal domain data store with simulated domains that contain keyed JSON documents...*__
 
 ## Testing And Examples
 
@@ -42,7 +44,7 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	
 ## query( params, rowCallback, completeCallback )
 
-	// query for a list rows where the key begins with 'my domain:'; limit the list to 25 rows
+	// query for all list rows where the key begins with 'mydomain:'
 	
 	var rowCallback = function(key, value) {
 		// put appropriate query conditions here 
@@ -59,12 +61,17 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	};
 	
 	var params = {
-		offset:0,
-		limit:25
+		start:'mydomain:',
+		end:'mydomain:~'  // the tilde insures all 'my domain' rows are found
 	};
 	
 	db.query(params, rowCallback, completeCallback);
 	
+## queryKeys( params, completeCallback )
+
+	// query for all keys and dump to the console...
+	
+	db.queryKeys( {}, console.log );
 
 ## find( key, callback )
 
@@ -222,6 +229,14 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	if (db.isInMemory()) {
 		log.info('database is in-memory, data will be lost if not backed up...');
 	}
+	
+## SimpleNodeDb.createRepl( db )
+
+	// creates a REPL for SimpleNoeDb and opens the database 'db'
+	// if db is null, then an in-memory db is opened
+	
+	db = require('simple-node-db').createREPL( './mydb' );
+	
 	
 - - -
 <p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.24</em></small></p>
