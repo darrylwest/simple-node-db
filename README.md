@@ -15,7 +15,7 @@ __*Note: levelup is a simple key/value store.  It may be more appropriate to use
 
 ## Testing And Examples
 
-Basic testing is in place for all implemented methods (replicate is not implemented yet).  More robust testing and examples will come soon.
+Basic testing is in place for all implemented methods.  Examples can be found under ./examples.
 
 # API
 
@@ -31,13 +31,8 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	// create a database with options
 	var options = {
 		path:'/my/db/path',
-		readAfterChange:true, // read-back record after insert/update; else return model
-		replication:{
-			path:'/my/replication/db',
-			interval:60000 * 5, // save after 5 minutes of inactivity,
-			extension:'today' // replication name rolls daily
-		},
-		log:new Logger('db')
+		log:new Logger('db'),
+		readAfterChange:true // read-back record after insert/update; else return model
 	};
 	
 	db = new SimpleDb( options );
@@ -192,15 +187,9 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 	
 ## stats( callback )
 
-	var callback = function(err, stats) {
-		if (err) throw err;
-		
-		console.log( stats.rowcount );
-		console.log( stats.domains );
-		console.log( stats.errors );
-	};
+	// reports the domains and number of rows
 	
-	db.stats( callback );
+	db.stats( console.log );
 	
 ## close( callback )
 
@@ -214,15 +203,6 @@ Basic testing is in place for all implemented methods (replicate is not implemen
 		log.info('db is now open...');
 	});
 
-## replicate( config, callback )
-
-	// copy the current database to a replica; use this to periodically backup an in-memory 
-	// db or to get a snap-shot of the current database; configure to automatically replicate
-	// changes periodically.
-	
-	// NOTE: not implemented yet...
-	
-	db.replicate( config, callback );
 	
 ## isInMemory()
 	

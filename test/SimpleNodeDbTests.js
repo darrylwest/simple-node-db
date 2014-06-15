@@ -38,7 +38,6 @@ describe('SimpleNodeDb', function() {
             'backup',
             'restore',
             'stats',
-            'replicate',
             'isInMemory',
             'open',
             'close',
@@ -397,12 +396,5 @@ describe('SimpleNodeDb', function() {
             model.dateCreated.getTime().should.equal( user.dateCreated.getTime() );
             model.lastUpdated.getTime().should.equal( user.lastUpdated.getTime() );
         });
-    });
-
-    describe('replicate', function() {
-        var db = new SimpleNodeDb();
-
-        it('should copy all data from an existing database to a replica');
-        it('should sync new data operations to a replica database');
     });
 });
