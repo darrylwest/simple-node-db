@@ -13,6 +13,10 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 
 __*Note: levelup is a simple key/value store.  It may be more appropriate to use this for simple storage.  SimpleNodeDb is designed to work more as a formal domain data store with simulated domains that contain keyed JSON documents...*__
 
+## Installation
+
+	npm install simple-node-db --save
+
 ## Testing And Examples
 
 Basic testing is in place for all implemented methods.  Examples can be found under ./examples.
@@ -219,4 +223,4 @@ Basic testing is in place for all implemented methods.  Examples can be found un
 	
 	
 - - -
-<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.26</em></small></p>
+<p><small><em>Copyright (c) 2014, rain city software, inc. | Version 0.9.27</em></small></p>
