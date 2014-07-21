@@ -25,6 +25,6 @@ publish:
 
 .PHONY:	npm
 .PHONY:	test
-.PHONY:	jshit
+.PHONY:	jshint
 .PHONY:	watch
 .PHONY:	publish
