@@ -20,11 +20,7 @@ watch:
 docs:
 	@( grunt jsdoc )
 
-publish:
-	@( npm publish ./ )
-
 .PHONY:	npm
 .PHONY:	test
-.PHONY:	jshit
+.PHONY:	jshint
 .PHONY:	watch
-.PHONY:	publish
