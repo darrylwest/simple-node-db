@@ -1,4 +1,0 @@
-
-[ ] add jsdocs
-[ ] implement replication
-

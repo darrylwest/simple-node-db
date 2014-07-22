@@ -3,7 +3,7 @@
 'use strict';
 
 var path = require('path'),
-    log = require('simple-node-logger').createLogger(),
+    log = require('simple-node-logger').createSimpleLogger(),
     casual = require('casual'),
     SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' )),
     options = {
