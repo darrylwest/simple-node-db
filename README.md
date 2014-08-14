@@ -223,4 +223,4 @@ Basic testing is in place for all implemented methods.  Examples can be found un
 	
 	
 - - -
-<p><small><em>Copyright © 2014, rain city software, inc. | Version 0.90.29</em></small></p>
+<p><small><em>Copyright © 2014, rain city software, inc. | Version 0.90.30</em></small></p>
