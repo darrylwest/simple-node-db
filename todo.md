@@ -5,6 +5,7 @@ Node Db To Do List
 
 * improve REPL
 * create replication with pub/sub channels?
+* create direct access through web sockets after determining how to secure
 
 # Tests
 
