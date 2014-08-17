@@ -73,22 +73,6 @@ describe('SimpleNodeDb', function() {
             });
         });
 
-        it('should create a file-based instance of SimpleNodeDb', function(done) {
-            var dbfile = 'simpledb-test-' + dash.random(1000, 9999),
-                db = new SimpleNodeDb( dbfile );
-
-            should.exist( db );
-
-            fs.exists( dbfile, function(exists) {
-                exists.should.equal( true );
-
-                db.close(function() {
-                    levelup.destroy( dbfile );
-                    done();
-                });
-            });
-        });
-
         it('should have all know methods by size and type', function() {
             var db = new SimpleNodeDb();
 
