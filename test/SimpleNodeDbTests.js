@@ -67,7 +67,7 @@ describe('SimpleNodeDb', function() {
                 exists.should.equal( true );
 
                 db.close(function() {
-                    levelup.destroy( dbfile );
+                    // levelup.destroy( dbfile );
                     done();
                 });
             });
