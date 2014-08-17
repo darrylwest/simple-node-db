@@ -2,6 +2,7 @@ simple-node-db
 ==============
 
 [![NPM version](https://badge.fury.io/js/simple-node-db.svg)](http://badge.fury.io/js/simple-node-db)
+[![Build Status](https://travis-ci.org/darrylwest/simple-node-db.svg?branch=master)](https://travis-ci.org/darrylwest/simple-node-db)
 
 ## Overview
 
