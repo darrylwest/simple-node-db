@@ -1,6 +1,8 @@
 simple-node-db
 ==============
 
+[![NPM version](https://badge.fury.io/js/simple-node-db.svg)](http://badge.fury.io/js/simple-node-db)
+
 ## Overview
 
 A database implementation on top of levelup, leveldown, and memdown.  SimpleNodeDb leverages the document store aspects of level up to provide a data-model/domain centric implementation.   
@@ -223,4 +225,4 @@ Basic testing is in place for all implemented methods.  Examples can be found un
 	
 	
 - - -
-<p><small><em>Copyright © 2014, rain city software, inc. | Version 0.90.30</em></small></p>
+<p><small><em>Copyright © 2014, rain city software, inc. | Version 0.90.31</em></small></p>

@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/darrylwest/simple-node-db.git"
   },
+  "scripts":{
+    "test":"grunt test"
+  },
   "keywords": [
     "database",
     "document-db",
