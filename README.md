@@ -1,8 +1,7 @@
-simple-node-db
-==============
+# Simple Node DB
+- - -
 
-[![NPM version](https://badge.fury.io/js/simple-node-db.svg)](http://badge.fury.io/js/simple-node-db)
-[![Build Status](https://travis-ci.org/darrylwest/simple-node-db.svg?branch=master)](https://travis-ci.org/darrylwest/simple-node-db)
+[![NPM version](https://badge.fury.io/js/simple-node-db.svg)](http://badge.fury.io/js/simple-node-db) [![Build Status](https://travis-ci.org/darrylwest/simple-node-db.svg?branch=master)](https://travis-ci.org/darrylwest/simple-node-db) [![Dependency Status](https://david-dm.org/darrylwest/simple-node-db.svg)](https://david-dm.org/darrylwest/simple-node-db)
 
 ## Overview
 
@@ -226,4 +225,4 @@ Basic testing is in place for all implemented methods.  Examples can be found un
 	
 	
 - - -
-<p><small><em>Copyright © 2014, rain city software, inc. | Version 0.90.32</em></small></p>
+<p><small><em>Copyright © 2014, rain city software, inc. | Version 0.90.33</em></small></p>
