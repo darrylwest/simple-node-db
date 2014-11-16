@@ -1,14 +1,14 @@
 {
   "name": "simple-node-db",
-  "version": "0.90.33",
+  "version": "0.90.34",
   "description": "A document database with query, insert, update, backup/restore and replication implemented on top of levelup, leveldown, and memdown.",
   "main": "./index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/darrylwest/simple-node-db.git"
   },
-  "scripts":{
-    "test":"grunt test"
+  "scripts": {
+    "test": "grunt test"
   },
   "keywords": [
     "database",
@@ -21,13 +21,13 @@
   ],
   "dependencies": {
     "casual": "^1.4.5",
-    "commander": "^2.2.0",
-    "leveldown": "^0.10.2",
-    "levelup": "^0.18.3",
+    "commander": "^2.5.0",
+    "levelup": "^0.19.0",
+    "leveldown": "~0.10.0",
     "lodash": "~2.4.1",
-    "memdown": "^0.10.0",
+    "memdown": "^1.0.0",
     "node-uuid": "~1.4.1",
-    "simple-node-logger": "^0.92.11"
+    "simple-node-logger": "^0.92.13"
   },
   "devDependencies": {
     "chai": "~1.8.1",
