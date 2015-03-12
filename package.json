@@ -1,6 +1,6 @@
 {
   "name": "simple-node-db",
-  "version": "0.90.34",
+  "version": "0.90.35",
   "description": "A document database with query, insert, update, backup/restore and replication implemented on top of levelup, leveldown, and memdown.",
   "main": "./index.js",
   "repository": {
@@ -23,11 +23,11 @@
     "casual": "^1.4.5",
     "commander": "^2.5.0",
     "levelup": "^0.19.0",
-    "leveldown": "~0.10.0",
-    "lodash": "~2.4.1",
+    "leveldown": "^0.10.0",
+    "lodash": "^3.5.0",
     "memdown": "^1.0.0",
     "node-uuid": "~1.4.1",
-    "simple-node-logger": "^0.92.13"
+    "simple-node-logger": "^0.92.18"
   },
   "devDependencies": {
     "chai": "~1.8.1",
