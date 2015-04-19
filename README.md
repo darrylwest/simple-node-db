@@ -13,7 +13,7 @@ Automatic model attributes include dateCreated, lastUpdated and version.  The ve
 
 Typically SimpleNodeDb is well suited for small to medium datasets (less than 100K rows) or data stores that don't require complex querying.  It also provides robust caching when used as an in-memory data store.  To support more than 100K rows you should probably create alternate indexing schemes or stick with redis, mongo, or a traditional SQL database.
 
-__*Note: levelup is a simple key/value store.  It may be more appropriate to use this for simple storage.  SimpleNodeDb is designed to work more as a formal domain data store with simulated domains that contain keyed JSON documents...*__
+__*Note: levelup is a simple key/value store.  It may be more appropriate to use this for simple, single user access storage.  SimpleNodeDb is designed to work more as a formal domain data store with simulated domains that contain keyed JSON documents.  For most use cases, it is more appropriate to use redis or another server based document store if multi-user access is required...*__
 
 ## Installation
 
@@ -225,4 +225,4 @@ Basic testing is in place for all implemented methods.  Examples can be found un
 	
 	
 - - -
-<p><small><em>Copyright © 2014-2015, rain city software, inc. | Version 0.90.36</em></small></p>
+<p><small><em>Copyright © 2014-2015, rain city software, inc. | Version 0.90.37</em></small></p>
