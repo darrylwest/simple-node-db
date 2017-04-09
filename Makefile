@@ -1,3 +1,7 @@
+JSFILES=index.js lib/*.js test/*.js test/fixtures/*.js
+TESTFILES=test/*.js
+JSHINT=node_modules/.bin/jshint
+MOCHA=node_modules/.bin/mocha
 
 all:
 	@make npm
@@ -8,17 +12,17 @@ npm:
 
 test:
 	@( [ -d node_modules ] || make npm )
-	@( grunt test )
+	@( $(MOCHA) $(TESTFILES) )
 
 jshint:
 	@( [ -d node_modules ] || make npm )
-	@( grunt jshint )
+	@( $(JSHINT) --verbose --reporter node_modules/jshint-stylish/  $(JSFILES) )
 
 watch:
-	@( grunt watchall )
+	@( ./watcher.js )
 
-docs:
-	@( grunt jsdoc )
+edit:
+	vi -O3 $(JSFILES)
 
 .PHONY:	npm
 .PHONY:	test

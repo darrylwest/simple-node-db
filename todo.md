@@ -5,20 +5,10 @@ Node Db To Do List
 
 * improve REPL
 * create replication with pub/sub channels?
-* create direct access through web sockets after determining how to secure
-
-# Tests
-
-# Docs
-
-* document the current examples
-* document REPL use
-* create real world use-case diagram (todo app?)
-* invite comments and forks
-
+* create direct access through web sockets
 
 - - -
-<p><small><em>last updated July 20, 2014</em></small></p>
+<p><small><em>last updated April 9, 2017</em></small></p>
 
 
 
