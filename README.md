@@ -292,4 +292,4 @@ db.query({}, rowcb)
 ```
 
 - - -
-<p><small><em>Copyright © 2014-2017, rain city software, inc. | Version 0.91.11</em></small></p>
+<p><small><em>Copyright © 2014-2017, rain city software, inc. | Version 0.91.12</em></small></p>
