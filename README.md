@@ -23,6 +23,14 @@ Typically SimpleNodeDb is well suited for small to medium datasets (less than 10
 
 _Note: levelup is a simple key/value store.  It may be more appropriate to use this for simple, single user access storage.  SimpleNodeDb is designed to work more as a formal domain data store with simulated domains that contain keyed JSON documents.  For most use cases, it is more appropriate to use redis or another server based document store if multi-user access is required..._
 
+## Change Log
+
+### 0.91.x (requires node 4.x)
+
+* replaced uuid with ulid
+* replaced casual with random-fixture-data
+* refactored for es6, const/let
+
 ## Installation
 
 ```bash
@@ -39,14 +47,14 @@ Basic testing is in place for all implemented methods.  Examples can be found un
 
 ```javascript
 // create an in-memory database
-var SimpleDb = require('simple-node-db');
-var db = new SimpleDb();
+const SimpleDb = require('simple-node-db');
+let db = new SimpleDb({memory:true});
 
 // create a file based database
 db = new SimpleDb('/path/to/database');
 
 // create a database with options
-var options = {
+const options = {
 	path:'/my/db/path',
 	log:new Logger('db'),
 	readAfterChange:true // read-back record after insert/update; else return model
@@ -60,7 +68,7 @@ db = new SimpleDb( options );
 ```javascript
 // query for all list rows where the key begins with 'mydomain:'
 
-var rowCallback = function(key, value) {
+const rowCallback = function(key, value) {
 	// put appropriate query conditions here 
 	if ( key.indexOf('mydomain:') >= 0) ) {
 		// parse and return the value
@@ -68,13 +76,13 @@ var rowCallback = function(key, value) {
 	}
 };
 
-var completeCallback = function(err, list) {
+const completeCallback = function(err, list) {
 	if (err) throw err;
 	
 	assert list.length === 25
 };
 
-var params = {
+const params = {
 	start:'mydomain:',
 	end:'mydomain:~'  // the tilde insures all 'my domain' rows are found
 };
@@ -94,10 +102,10 @@ db.queryKeys( {}, console.log );
 
 ```javascript
 // create the key based on domain and model id
-var key = db.createDomainKey( 'user', id );
+const key = db.createDomainKey( 'user', id );
 
 // value is saved as a json object
-var callback = function(err, model) {
+const callback = function(err, model) {
 	if (err) throw err;
 	
 	// do something with the model...
@@ -110,7 +118,7 @@ db.find( key, callback );
 
 ```javascript
 // a simple user model
-var user = {
+caonst user = {
 	id:'12345',
 	name:'Sam Sammyson',
 	email:'sam@sammyson.com',
@@ -118,9 +126,9 @@ var user = {
 };
 
 // key is created for the 'user' domain
-var key = db.createDomainKey( 'user', user.id )
+const key = db.createDomainKey( 'user', user.id )
 
-var callback = function(err, model) {
+const callback = function(err, model) {
 	if (err) throw err;
 	
 	assert model.dateCreated;
@@ -136,7 +144,7 @@ db.insert( key, model, callback );
 
 ```javascript
 // the version and lastUpdated attributes are automatically updated
-var user = {
+const user = {
 	id:'12345',
 	dateCreated:new Date(),
 	lastUpdated:new Date(),
@@ -146,9 +154,9 @@ var user = {
 	status:'active'
 };
 
-var key = db.createDomainKey( 'user', user.id )
+const key = db.createDomainKey( 'user', user.id )
 
-var callback = function(err, model) {
+const callback = function(err, model) {
 	if (err) throw err;
 	
 	assert model.version === user.version + 1;
@@ -163,7 +171,7 @@ db.update( key, model, callback );
 
 ```javascript
 // very simple, merciless delete -- use at your own risk...
-var callback = function(err) {
+const callback = function(err) {
 	if (err) throw err;
 };
 
@@ -174,17 +182,17 @@ db.delete( key, callback );
 
 ```javascript
 // create a model id from uuid without dashes
-var id = db.createModelId()
+const id = db.createModelId()
 ```
 
 ## createDomainKey( domain, id );
 
 ```javascript
-var model = {
+const model = {
 	id:db.createModelId()
 };
 
-var key = db.createDomainKey( 'user', model.id );
+const key = db.createDomainKey( 'user', model.id );
 
 assert key.contains( 'user' );
 assert key.contains( model.id );
@@ -194,9 +202,9 @@ assert key.contains( model.id );
 
 ```javascript
 // stream dump of keys and values row-by-row, CR/LF delimited
-var filename = '/path/to/backup/file';
+const filename = '/path/to/backup/file';
 
-var callback = function(err, rowsWritten) {
+const callback = function(err, rowsWritten) {
 	if (err) throw err;
 	
 	assert rowsWritten > 0;
@@ -209,13 +217,13 @@ db.backup( filename, callback );
 
 ```javascript
 // read the key/value file and batch put the rows; uses stream reader to 
-var callback = function(err, rowsRead) {
+const callback = function(err, rowsRead) {
 	if (err) throw err;
 	
 	assert rowsRead > 0;
 };
 
-var filename = '/path/to/my/backup';
+const filename = '/path/to/my/backup';
 
 db.restore( filename, callback );
 ```
@@ -263,4 +271,4 @@ db = require('simple-node-db').createREPL( './mydb' );
 ```
 
 - - -
-<p><small><em>Copyright © 2014-2015, rain city software, inc. | Version 0.91.10</em></small></p>
+<p><small><em>Copyright © 2014-2017, rain city software, inc. | Version 0.91.10</em></small></p>
