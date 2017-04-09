@@ -27,9 +27,11 @@ _Note: levelup is a simple key/value store.  It may be more appropriate to use t
 
 ### 0.91.x (requires node 4.x)
 
-* replaced uuid with ulid
+* replaced uuid with ulid, a [universally unique lexicographically sortable identifier](https://github.com/alizain/ulid)
 * replaced casual with random-fixture-data
 * refactored for es6, const/let
+
+_Note: Future changes: for now support goes back to node 4.x; the next release will require 6.x to support more es6 features._
 
 ## Installation
 
@@ -118,7 +120,7 @@ db.find( key, callback );
 
 ```javascript
 // a simple user model
-caonst user = {
+Const user = {
 	id:'12345',
 	name:'Sam Sammyson',
 	email:'sam@sammyson.com',
@@ -261,13 +263,31 @@ if (db.isInMemory()) {
 }
 ```
 	
-## SimpleNodeDb.createRepl( db )
+## SimpleNodeDb.createREPL( db )
+
+A REPL is available to enable database manipulation from the node repl.
 
 ```javascript
 // creates a REPL for SimpleNoeDb and opens the database 'db'
 // if db is null, then an in-memory db is opened
 
 db = require('simple-node-db').createREPL( './mydb' );
+db.stats() // shows the domains, row counts, etc
+db.query() // dumps all the rows
+db.queryKeys() // dumps all the keys
+db.find('user:01BDA1K893NMBH2W1FFRD4W76A') // will return the user if it exists
+
+// query for all users
+db.query({start:'user:',end:'user:~'})
+
+// or, an alternative to find all the users...
+let rowcb = (key, value) => {
+	if (key.startsWith('user:')) {
+		return JSON.parse(value);
+	}
+};
+db.query({}, rowcb)
+
 ```
 
 - - -
