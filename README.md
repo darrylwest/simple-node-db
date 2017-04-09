@@ -3,6 +3,14 @@
 
 [![NPM version](https://badge.fury.io/js/simple-node-db.svg)](http://badge.fury.io/js/simple-node-db) [![Build Status](https://travis-ci.org/darrylwest/simple-node-db.svg?branch=master)](https://travis-ci.org/darrylwest/simple-node-db) [![Dependency Status](https://david-dm.org/darrylwest/simple-node-db.svg)](https://david-dm.org/darrylwest/simple-node-db)
 
+```
+   _____            __      _  __        __         ____ 
+  / __(_)_ _  ___  / /__   / |/ /__  ___/ /__   ___/ / / 
+ _\ \/ /  ' \/ _ \/ / -_) /    / _ \/ _  / -_) / _  / _ \
+/___/_/_/_/_/ .__/_/\__/ /_/|_/\___/\_,_/\__/  \_,_/_.__/
+           /_/
+```
+
 ## Overview
 
 A database implementation on top of levelup, leveldown, and memdown.  SimpleNodeDb leverages the document store aspects of level up to provide a data-model/domain centric implementation.   
@@ -13,7 +21,7 @@ Automatic model attributes include dateCreated, lastUpdated and version.  The ve
 
 Typically SimpleNodeDb is well suited for small to medium datasets (less than 100K rows) or data stores that don't require complex querying.  It also provides robust caching when used as an in-memory data store.  To support more than 100K rows you should probably create alternate indexing schemes or stick with redis, mongo, or a traditional SQL database.
 
-__*Note: levelup is a simple key/value store.  It may be more appropriate to use this for simple, single user access storage.  SimpleNodeDb is designed to work more as a formal domain data store with simulated domains that contain keyed JSON documents.  For most use cases, it is more appropriate to use redis or another server based document store if multi-user access is required...*__
+_Note: levelup is a simple key/value store.  It may be more appropriate to use this for simple, single user access storage.  SimpleNodeDb is designed to work more as a formal domain data store with simulated domains that contain keyed JSON documents.  For most use cases, it is more appropriate to use redis or another server based document store if multi-user access is required..._
 
 ## Installation
 
@@ -255,4 +263,4 @@ db = require('simple-node-db').createREPL( './mydb' );
 ```
 
 - - -
-<p><small><em>Copyright © 2014-2015, rain city software, inc. | Version 0.90.37</em></small></p>
+<p><small><em>Copyright © 2014-2015, rain city software, inc. | Version 0.91.10</em></small></p>
