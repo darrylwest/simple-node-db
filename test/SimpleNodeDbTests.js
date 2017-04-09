@@ -75,7 +75,7 @@ describe('SimpleNodeDb', function() {
         it('should have all know methods by size and type', function() {
             const db = new SimpleNodeDb();
 
-            dash.methods( db ).length.should.equal( methods.length );
+            Object.keys( db ).length.should.equal( methods.length );
 
             methods.forEach(function(method) {
                 db[ method ].should.be.a( 'function' );
