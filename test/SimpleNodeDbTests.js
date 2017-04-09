@@ -309,7 +309,7 @@ describe('SimpleNodeDb', function() {
                 should.not.exist( err );
                 should.exist( count );
 
-                count.should.equal( 25 );
+                count.should.equal( 10 );
 
                 done();
             };
