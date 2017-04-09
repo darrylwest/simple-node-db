@@ -9,3 +9,7 @@ before_script:
   - npm install
 
 script: make test
+
+branches:
+  only:
+  - master

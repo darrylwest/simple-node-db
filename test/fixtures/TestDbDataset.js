@@ -4,21 +4,34 @@
  * @author: darryl.west@roundpeg.com
  * @created: 5/24/14 5:16 PM
  */
-var dash = require("lodash" ),
-    uuid = require('node-uuid' ),
-    casual = require('casual');
+const dash = require("lodash" );
+const ulid = require('ulid' );
+const fixtureData = require('random-fixture-data');
 
-var TestDbDataset = function() {
+const TestDbDataset = function() {
     'use strict';
 
-    var dataset = this;
+    const dataset = this;
+
+    // the user model
+    const User = function(params) {
+        this.id = params.id;
+        this.dateCreated = params.dateCreated;
+        this.lastUpdated = params.lastUpdated;
+        this.version = params.version;
+
+        this.name = params.name;
+        this.email = params.email;
+        this.token = params.token;
+        this.status = params.status;
+    };
 
     /**
-     * create a standard uuid
-     * @returns uuid
+     * create a standard ulid
+     * @returns uulid
      */
-    this.createUUID = function() {
-        return uuid.v4();
+    this.createULID = function() {
+        return ulid();
     };
 
     /**
@@ -27,11 +40,12 @@ var TestDbDataset = function() {
      * @returns obj with values id, dateCreated, lastUpdated, version
      */
     this.createBaseModel = function() {
-        var obj = {};
+        const obj = {};
 
-        obj.id = uuid.v4().replace(/-/g, '');
+        obj.id = ulid().replace(/-/g, '');
 
-        var dt = new Date();
+        const dt = new Date();
+
         obj.dateCreated = dt;
         obj.lastUpdated = dt;
 
@@ -43,7 +57,7 @@ var TestDbDataset = function() {
     this.createUserList = function(count) {
         if (!count) count = 25;
 
-        var list = [];
+        const list = [];
 
         while ( count-- > 0 ) {
             list.push( dataset.createUserModel() );
@@ -56,8 +70,8 @@ var TestDbDataset = function() {
         if (!batch) batch = [];
 
         list.forEach(function(item) {
-            var key = domain + ':' + item.id;
-            var value = JSON.stringify( item );
+            const key = domain + ':' + item.id;
+            const value = JSON.stringify( item );
 
             batch.push( { type:'put', key:key, value:value });
         });
@@ -66,32 +80,21 @@ var TestDbDataset = function() {
     };
 
     this.createUserModel = function() {
-        var params = {};
+        const params = {};
 
-        params.id = uuid.v4().replace(/-/g, '');
+        params.id = ulid().replace(/-/g, '');
         params.dateCreated = new Date( '2014-01-01T02:03:04' );
         params.lastUpdated = new Date( '2014-01-02T03:04:05' );
         params.version = 0;
 
-        params.name = casual.name;
-        params.email = casual.email;
-        params.token = uuid.v4();
+        params.name = fixtureData.name;
+        params.email = fixtureData.email;
+        params.token = ulid();
         params.status = 'active';
 
         return new User( params );
     };
 
-    var User = function(params) {
-        this.id = params.id;
-        this.dateCreated = params.dateCreated;
-        this.lastUpdated = params.lastUpdated;
-        this.version = params.version;
-
-        this.name = params.name;
-        this.email = params.email;
-        this.token = params.token;
-        this.status = params.status;
-    };
 };
 
 /**
@@ -102,7 +105,7 @@ var TestDbDataset = function() {
  */
 TestDbDataset.extend = function(child) {
     'use strict';
-    var parent = new TestDbDataset();
+    const parent = new TestDbDataset();
 
     dash.extend( child, parent );
 

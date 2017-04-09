@@ -1,4 +1,4 @@
-JSFILES=index.js lib/*.js test/*.js test/fixtures/*.js
+JSFILES=lib/*.js test/*.js test/fixtures/*.js
 TESTFILES=test/*.js
 JSHINT=node_modules/.bin/jshint
 MOCHA=node_modules/.bin/mocha

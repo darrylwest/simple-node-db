@@ -4,22 +4,21 @@
  * @author: darryl.west@roundpeg.com
  * @created: 5/24/14 1:10 PM
  */
-var should = require('chai').should(),
-    dash = require('lodash'),
-    TestDbDataset = require('./fixtures/TestDbDataset' ),
-    SimpleNodeDb = require('../lib/SimpleNodeDb' ),
-    levelup = require( 'levelup' ),
-    fs = require('fs');
+const should = require('chai').should();
+const dash = require('lodash');
+const TestDbDataset = require('./fixtures/TestDbDataset' );
+const SimpleNodeDb = require('../lib/SimpleNodeDb' );
+const levelup = require( 'levelup' );
+const fs = require('fs');
 
 describe('SimpleNodeDb', function() {
     'use strict';
 
-    var dataset = new TestDbDataset(),
-        backupFilename = './backups/db-backup.dat',
-        populateDatabase;
+    const dataset = new TestDbDataset();
+    const backupFilename = './backups/db-backup.dat';
 
-    populateDatabase = function(db, batch, done) {
-        var ldb = db.__protected().levelDb;
+    const populateDatabase = function(db, batch, done) {
+        const ldb = db.__protected().levelDb;
         ldb.batch( batch, function(err) {
             if (err) throw err;
 
@@ -28,7 +27,7 @@ describe('SimpleNodeDb', function() {
     };
 
     describe('#instance', function() {
-        var methods = [
+        const methods = [
             'query',
             'queryKeys',
             'find',
@@ -48,7 +47,7 @@ describe('SimpleNodeDb', function() {
         ];
 
         it('should create a memory-only instance of SimpleNodeDb', function() {
-            var db = new SimpleNodeDb();
+            const db = new SimpleNodeDb();
             should.exist( db );
 
             db.should.be.instanceof( SimpleNodeDb );
@@ -58,8 +57,8 @@ describe('SimpleNodeDb', function() {
         });
 
         it('should create a file-based instance of SimpleNodeDb', function(done) {
-            var dbfile = './simpledb-test-' + dash.random(1000, 9999),
-                db = new SimpleNodeDb( dbfile );
+            const dbfile = `./simpledb-test-${dash.random(1000, 9999)}`;
+            const db = new SimpleNodeDb( dbfile );
 
             should.exist( db );
 
@@ -74,7 +73,7 @@ describe('SimpleNodeDb', function() {
         });
 
         it('should have all know methods by size and type', function() {
-            var db = new SimpleNodeDb();
+            const db = new SimpleNodeDb();
 
             dash.methods( db ).length.should.equal( methods.length );
 
@@ -85,10 +84,10 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('find', function() {
-        var db = new SimpleNodeDb(),
-            users = dataset.createUserList( 23 ),
-            employees = dataset.createUserList( 34 ),
-            batch = [];
+        const db = new SimpleNodeDb();
+        const users = dataset.createUserList( 23 );
+        const employees = dataset.createUserList( 34 );
+        const batch = [];
 
         dataset.createPutBatch( 'user', users, batch );
         dataset.createPutBatch( 'employee', employees, batch );
@@ -98,11 +97,10 @@ describe('SimpleNodeDb', function() {
         });
 
         it('should return a known model', function(done) {
-            var callback,
-                user = users[ 4 ],
-                key = db.createDomainKey( 'user', user.id );
+            const user = users[ 4 ],
+            const key = db.createDomainKey( 'user', user.id );
 
-            callback = function(err, model) {
+            const callback = function(err, model) {
                 should.not.exist( err );
                 should.exist( model );
 
@@ -117,13 +115,14 @@ describe('SimpleNodeDb', function() {
 
     describe('insert', function() {
         it('should insert a new model and set dateCreated, lastUpdated and version', function(done) {
-            var user = dataset.createUserModel(),
-                db = new SimpleNodeDb(),
-                key = db.createDomainKey( 'user', user.id ),
-                callback;
+            const user = dataset.createUserModel();
+            const db = new SimpleNodeDb();
+            const key = db.createDomainKey( 'user', user.id );
 
             callback = function(err, model) {
-                if (err) throw err;
+                if (err) }
+                    throw err;
+                }
 
                 should.not.exist( err );
                 should.exist( model );
@@ -136,12 +135,12 @@ describe('SimpleNodeDb', function() {
 
                 model.version.should.equal( 0 );
 
-                var ldb = db.__protected().levelDb;
+                const ldb = db.__protected().levelDb;
                 ldb.get( key, function(err, u) {
                     should.not.exist( err );
                     should.exist( u );
 
-                    var obj = JSON.parse( u );
+                    const obj = JSON.parse( u );
                     obj.id.should.equal( user.id );
 
                     done();
@@ -152,12 +151,11 @@ describe('SimpleNodeDb', function() {
         });
 
         it('should reject a non-object model', function(done) {
-            var model = 'this is a bad model',
-                key = 'bad key',
-                db = new SimpleNodeDb(),
-                callback;
+            const model = 'this is a bad model';
+            const key = 'bad key';
+            const db = new SimpleNodeDb();
 
-            callback = function(err, result) {
+            const callback = function(err, result) {
                 should.exist( err );
                 should.not.exist( result );
 
@@ -169,18 +167,18 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('update', function() {
-        var user = dataset.createUserModel(),
-            db = new SimpleNodeDb(),
-            key = db.createDomainKey( 'user', user.id );
+        const user = dataset.createUserModel();
+        const db = new SimpleNodeDb();
+        const key = db.createDomainKey( 'user', user.id );
 
         db.insert( key, user, function(err, model) {
             user = model;
         });
 
         it('should update an existing model', function(done) {
-            var version = user.version;
+            const version = user.version;
 
-            var callback = function(err, model) {
+            const callback = function(err, model) {
                 should.not.exist( err );
                 should.exist( model );
 
@@ -194,30 +192,28 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('query', function() {
-        var db = new SimpleNodeDb(),
-            size = 35,
-            users = dataset.createUserList( size ),
-            batch = dataset.createPutBatch( 'user', users );
+        cosnt db = new SimpleNodeDb();
+        const size = 35;
+        const users = dataset.createUserList( size );
+        const batch = dataset.createPutBatch( 'user', users );
 
         beforeEach(function(done) {
             populateDatabase( db, batch, done );
         });
 
         it('should return a list of known models', function(done) {
-            var rowCallback,
-                completeCallback,
-                params = {};
+            const params = {};
 
-            rowCallback = function(key, value) {
+            const rowCallback = function(key, value) {
                 return JSON.parse( value );
             };
 
-            completeCallback = function(err, list) {
+            const completeCallback = function(err, list) {
                 should.not.exist( err );
                 should.exist( list );
 
                 list.length.should.be.equal( size );
-                var user = list[0];
+                cosnt user = list[0];
 
                 should.exist( user.id );
 
@@ -229,20 +225,19 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('queryKeys', function() {
-        var db = new SimpleNodeDb(),
-            size = 30,
-            users = dataset.createUserList( size ),
-            batch = dataset.createPutBatch( 'user', users );
+        const db = new SimpleNodeDb();
+        const size = 30;
+        const users = dataset.createUserList( size );
+        const batch = dataset.createPutBatch( 'user', users );
 
         beforeEach(function(done) {
             populateDatabase( db, batch, done );
         });
 
         it('should return a list of known keys', function(done) {
-            var completeCallback,
-                params = {};
+            const params = {};
 
-            completeCallback = function(err, keys) {
+            const completeCallback = function(err, keys) {
                 should.not.exist( err );
                 should.exist( keys );
 
@@ -259,21 +254,20 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('delete', function() {
-        var db = new SimpleNodeDb(),
-            size = 8,
-            users = dataset.createUserList( size ),
-            batch = dataset.createPutBatch( 'user', users );
+        const db = new SimpleNodeDb();
+        const size = 8;
+        const users = dataset.createUserList( size );
+        const batch = dataset.createPutBatch( 'user', users );
 
         beforeEach(function(done) {
             populateDatabase( db, batch, done );
         });
 
         it('should remove a known row from the database', function(done) {
-            var user = users[ 4 ],
-                key = db.createDomainKey( 'user', user.id ),
-                callback;
+            const user = users[ 4 ];
+            const key = db.createDomainKey( 'user', user.id );
 
-            callback = function(err) {
+            const callback = function(err) {
                 should.not.exist( err );
                 done();
             };
@@ -284,17 +278,17 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('backup', function() {
-        var db = new SimpleNodeDb(),
-            users = dataset.createUserList(),
-            batch = dataset.createPutBatch( 'user', users ),
-            filename = '/tmp/db-backup.dat';
+        const db = new SimpleNodeDb();
+        const users = dataset.createUserList();
+        const batch = dataset.createPutBatch( 'user', users );
+        const filename = '/tmp/db-backup.dat';
 
         beforeEach(function(done) {
             populateDatabase( db, batch, done );
         });
 
         it('should backup a database to a file', function(done) {
-            var callback = function(err, count) {
+            const callback = function(err, count) {
                 should.not.exist( err );
                 should.exist( count );
 
@@ -308,10 +302,10 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('restore', function() {
-        var db = new SimpleNodeDb();
+        const db = new SimpleNodeDb();
 
         it('should restore a database from a file', function(done) {
-            var callback = function(err, count) {
+            const callback = function(err, count) {
                 should.not.exist( err );
                 should.exist( count );
 
@@ -327,10 +321,10 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('stats', function() {
-        var db = new SimpleNodeDb(),
-            users = dataset.createUserList( 23 ),
-            employees = dataset.createUserList( 34 ),
-            batch = [];
+        const db = new SimpleNodeDb();
+        const users = dataset.createUserList( 23 );
+        const employees = dataset.createUserList( 34 );
+        const batch = [];
 
         dataset.createPutBatch( 'user', users, batch );
         dataset.createPutBatch( 'employee', employees, batch );
@@ -340,7 +334,7 @@ describe('SimpleNodeDb', function() {
         });
 
         it('should report database stats', function(done) {
-            var callback = function(err, stats) {
+            const callback = function(err, stats) {
                 should.not.exist( err );
                 should.exist( stats );
 
@@ -360,16 +354,15 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('parseModel', function() {
-        var db = new SimpleNodeDb(),
-            user = dataset.createUserModel();
+        const db = new SimpleNodeDb();
+        const user = dataset.createUserModel();
 
         // console.log( user );
 
         it('should parse a json model and set dates to date type', function() {
-            var json = JSON.stringify( user ),
-                model;
+            const json = JSON.stringify( user );
 
-            model = db.parseModel( json );
+            const model = db.parseModel( json );
 
             should.exist( model );
             model.id.should.equal( user.id );
