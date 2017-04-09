@@ -97,7 +97,7 @@ describe('SimpleNodeDb', function() {
         });
 
         it('should return a known model', function(done) {
-            const user = users[ 4 ],
+            const user = users[ 4 ];
             const key = db.createDomainKey( 'user', user.id );
 
             const callback = function(err, model) {
@@ -119,8 +119,8 @@ describe('SimpleNodeDb', function() {
             const db = new SimpleNodeDb();
             const key = db.createDomainKey( 'user', user.id );
 
-            callback = function(err, model) {
-                if (err) }
+            const callback = function(err, model) {
+                if (err) {
                     throw err;
                 }
 
@@ -167,7 +167,7 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('update', function() {
-        const user = dataset.createUserModel();
+        let user = dataset.createUserModel();
         const db = new SimpleNodeDb();
         const key = db.createDomainKey( 'user', user.id );
 
@@ -192,7 +192,7 @@ describe('SimpleNodeDb', function() {
     });
 
     describe('query', function() {
-        cosnt db = new SimpleNodeDb();
+        const db = new SimpleNodeDb();
         const size = 35;
         const users = dataset.createUserList( size );
         const batch = dataset.createPutBatch( 'user', users );
@@ -213,7 +213,7 @@ describe('SimpleNodeDb', function() {
                 should.exist( list );
 
                 list.length.should.be.equal( size );
-                cosnt user = list[0];
+                const user = list[0];
 
                 should.exist( user.id );
 
