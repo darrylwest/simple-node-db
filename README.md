@@ -1,5 +1,4 @@
 # Simple Node DB
-- - -
 
 [![NPM version](https://badge.fury.io/js/simple-node-db.svg)](http://badge.fury.io/js/simple-node-db) [![Build Status](https://travis-ci.org/darrylwest/simple-node-db.svg?branch=master)](https://travis-ci.org/darrylwest/simple-node-db) [![Dependency Status](https://david-dm.org/darrylwest/simple-node-db.svg)](https://david-dm.org/darrylwest/simple-node-db)
 
@@ -185,7 +184,9 @@ db.delete( key, callback );
 
 ```javascript
 // create a model id from uuid without dashes
-const id = db.createModelId()
+const id = db.createModelId();
+
+assert id === '01BDA6RVHSFRQ2FKZ6FVJPFFSW';
 ```
 
 ## createDomainKey( domain, id );
@@ -197,8 +198,10 @@ const model = {
 
 const key = db.createDomainKey( 'user', model.id );
 
-assert key.contains( 'user' );
+assert key.contains( 'user:' );
 assert key.contains( model.id );
+
+assert key === 'user:01BDA6V2JGXN8WHTSF5DX8H21S';
 ```
 	
 ## backup( filename, callback )
@@ -291,5 +294,4 @@ db.query({}, rowcb)
 
 ```
 
-- - -
-<p><small><em>Copyright © 2014-2017, rain city software, inc. | Version 0.91.12</em></small></p>
+###### Copyright © 2014-2017, rain city software, inc. | Version 0.91.14
