@@ -2,7 +2,7 @@
 
 'use strict';
 
-var path = require('path'),
+const path = require('path'),
     log = require('simple-node-logger').createSimpleLogger(),
     SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' )),
     orderBackupFile = path.join( __dirname, 'orders.dat' ),

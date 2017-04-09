@@ -2,7 +2,7 @@
 
 'use strict';
 
-var path = require('path'),
+const path = require('path'),
     SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' )),
     db = new SimpleDb(path.join( __dirname, 'orderdb' ));
 

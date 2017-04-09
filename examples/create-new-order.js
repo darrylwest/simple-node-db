@@ -2,7 +2,7 @@
 
 'use strict';
 
-var path = require('path'),
+const path = require('path'),
     log = require('simple-node-logger').createSimpleLogger(),
     casual = require('casual'),
     SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' )),
@@ -15,8 +15,8 @@ var path = require('path'),
     key;
 
 // define the Order and Order Item objects
-var Order = function(params) {
-    var order = this;
+const Order = function(params) {
+    const order = this;
 
     if (!params) {
         params = {};
@@ -45,8 +45,8 @@ var Order = function(params) {
     };
 };
 
-var OrderItem = function(params) {
-    var item = this;
+const OrderItem = function(params) {
+    const item = this;
 
     if (!params) {
         params = {};
@@ -57,8 +57,8 @@ var OrderItem = function(params) {
     this.price = params.price;
 };
 
-var createNewOrder = function() {
-    var order,
+const createNewOrder = function() {
+    const order,
         params = {
             id:db.createModelId(),
             customer:{
