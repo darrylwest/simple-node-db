@@ -21,7 +21,7 @@
     "maxdepth": 3,
     "quotmark": false,
     "unused": false,
-    "maxstatements": 25,
+    "maxstatements": 26,
     "maxcomplexity": 10,
     "white": false,
     "curly": false,

@@ -2,17 +2,14 @@
 
 'use strict';
 
-const path = require('path'),
-    log = require('simple-node-logger').createSimpleLogger(),
-    casual = require('casual'),
-    SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' )),
-    options = {
-        path: path.join( __dirname, 'orderdb' ),
-        log:log
-    },
-    db = new SimpleDb( options ),
-    order,
-    key;
+const path = require('path');
+const log = require('simple-node-logger').createSimpleLogger();
+const randomData = require('random-fixture-data');
+const SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' ));
+const db = new SimpleDb({
+    path: path.join( __dirname, 'orderdb' ),
+    log:log
+});
 
 // define the Order and Order Item objects
 const Order = function(params) {
@@ -58,44 +55,40 @@ const OrderItem = function(params) {
 };
 
 const createNewOrder = function() {
-    const order,
-        params = {
-            id:db.createModelId(),
-            customer:{
-                id:casual.ip,
-                name:casual.company_name,
-                email:casual.email,
-            },
-            orderDate:new Date(),
-            status:'shipped',
-            items:[
-                new OrderItem({
-                    itemNumber:1,
-                    description:casual.words( 3 ),
-                    price:casual.integer(10, 100)
-                }),
-                new OrderItem({
-                    itemNumber:2,
-                    description:casual.words( 3 ),
-                    price:casual.integer(1, 100)
-                })
-            ]
-        };
+    const params = {
+        id:db.createModelId(),
+        customer:{
+            id:randomData.ip,
+            name:randomData.companyName,
+            email:randomData.email,
+        },
+        orderDate:new Date(),
+        status:'shipped',
+        items:[
+            new OrderItem({
+                itemNumber:1,
+                description:randomData.words( 3 ),
+                price:randomData.integer(10, 100)
+            }),
+            new OrderItem({
+                itemNumber:2,
+                description:randomData.words( 3 ),
+                price:randomData.integer(1, 100)
+            })
+        ]
+    };
 
     log.info('create the order from params: ', params);
 
-    order = new Order( params );
+    const order = new Order( params );
     order.calcTotal();
 
     return order;
-
 };
 
-
-
 // create the new order and key
-order = createNewOrder();
-key = db.createDomainKey( 'order', order.id );
+const order = createNewOrder();
+const key = db.createDomainKey( 'order', order.id );
 
 // do the insert 
 db.insert( key, order, function(err, model) {

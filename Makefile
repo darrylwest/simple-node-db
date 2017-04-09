@@ -1,4 +1,4 @@
-JSFILES=lib/*.js test/*.js test/fixtures/*.js
+JSFILES=lib/*.js test/*.js test/fixtures/*.js examples/*.js
 TESTFILES=test/*.js
 JSHINT=node_modules/.bin/jshint
 MOCHA=node_modules/.bin/mocha
@@ -12,7 +12,7 @@ npm:
 
 test:
 	@( [ -d node_modules ] || make npm )
-	@( $(MOCHA) $(TESTFILES) )
+	@( $(MOCHA) $(TESTFILES) && make jshint )
 
 jshint:
 	@( [ -d node_modules ] || make npm )

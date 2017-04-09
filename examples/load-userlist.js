@@ -2,9 +2,9 @@
 
 'use strict';
 
-const path = require('path'),
-    SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' )),
-    db = new SimpleDb( path.join( __dirname, 'orderdb' ));
+const path = require('path');
+const SimpleDb = require( path.join( __dirname,  '../lib/SimpleNodeDb' ));
+const db = new SimpleDb( path.join( __dirname, 'orderdb' ));
 
 console.log('restore the user list from backup...');
 db.restore( path.join( __dirname, 'users.dat'), function(err, count) {

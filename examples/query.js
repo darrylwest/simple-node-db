@@ -2,16 +2,16 @@
 
 'use strict';
 
-const path = require('path'),
-    SimpleDb = require( path.join( __dirname, '../lib/SimpleNodeDb' )),
-    db = new SimpleDb( path.join( __dirname, 'orderdb' ));
+const path = require('path');
+const SimpleDb = require( path.join( __dirname, '../lib/SimpleNodeDb' ));
+const db = new SimpleDb( path.join( __dirname, 'orderdb' ));
 
 const queryAllUsers = function() {
     const rowCallback = function(key, value) {
         if (key.indexOf('user') === 0) {
             return JSON.parse( value );
         }
-    }
+    };
 
     const completeCallback = function(err, list) {
         if (err) throw err;
@@ -26,13 +26,14 @@ const queryAllUsers = function() {
 const queryHotmailUsers = function() {
     const rowCallback = function(key, value) {
         if (key.indexOf('user') === 0) {
+            console.log(key, value);
             const user = JSON.parse( value );
 
             if (user.email.indexOf('@hotmail.com') > 0) {
                 return user;
             }
         }
-    }
+    };
 
     const completeCallback = function(err, list) {
         if (err) throw err;
@@ -47,7 +48,6 @@ const queryHotmailUsers = function() {
 const queryOrders = function() {
 
 };
-
 
 queryAllUsers();
 queryHotmailUsers();

@@ -1,5 +1,5 @@
 /**
- *
+ * @class SimpleNodeDbTests
  *
  * @author: darryl.west@roundpeg.com
  * @created: 5/24/14 1:10 PM
