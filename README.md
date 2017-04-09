@@ -27,6 +27,7 @@ _Note: levelup is a simple key/value store.  It may be more appropriate to use t
 
 ### 0.91.x (requires node 4.x)
 
+* updated levelup, leveldown, memdown, lodash to latest versions
 * replaced uuid with ulid, a [universally unique lexicographically sortable identifier](https://github.com/alizain/ulid)
 * replaced casual with random-fixture-data
 * refactored for es6, const/let
@@ -291,4 +292,4 @@ db.query({}, rowcb)
 ```
 
 - - -
-<p><small><em>Copyright © 2014-2017, rain city software, inc. | Version 0.91.10</em></small></p>
+<p><small><em>Copyright © 2014-2017, rain city software, inc. | Version 0.91.11</em></small></p>
