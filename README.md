@@ -294,4 +294,4 @@ db.query({}, rowcb)
 
 ```
 
-###### Copyright © 2014-2017, rain city software, inc. | Version 0.91.14
+###### Copyright © 2014-2017, Rain City Software | darryl.west | Version 0.91.15
